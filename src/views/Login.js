@@ -48,7 +48,7 @@ class Login extends React.Component {
             lineColor="#eee"
             width={1}
             text="or"
-            textStyles={styles.lineText}
+            textStyles={{ color: '#ffffff' }}
             textPadding={18}
             hrPadding={40}
             hrStyles={{ marginTop: 20 }}
@@ -98,9 +98,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 10,
     fontWeight: 'bold'
-  },
-  lineText: {
-    color: '#ffffff'
   },
   socialButtons: {
     width: '70%',

@@ -33,21 +33,7 @@ class App extends Component<Props> {
   }
 
   render() {
-    return (
-      // <View style={styles.container}>
-      //   <PlaceDetail
-      //     selectedPlace={this.props.selectedPlace}
-      //     onItemDeleted={this.placeDeletedHandler}
-      //     onModalClosed={this.modalClosedHandler}
-      //   />
-      //   <PlaceInput onPlaceAdded={this.placeAddedHandler} />
-      //   <PlaceList
-      //     places={this.props.places}
-      //     onItemSelected={this.placeSelectedHandler}
-      //   />
-      // </View>
-      <Router />
-    )
+    return <Router />
   }
 }
 
