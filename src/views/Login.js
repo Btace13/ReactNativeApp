@@ -2,8 +2,21 @@ import React from 'react'
 import { View, Image, StyleSheet, ImageBackground } from 'react-native'
 import Hr from 'react-native-hr-component'
 import { Item, Input, Icon, Button, Text } from 'native-base'
+import firebase from 'firebase'
 
 class Login extends React.Component {
+  constructor() {
+    super()
+    this.state = { email: '', password: '', errorMessage: '' }
+  }
+  handleLogin = () => {
+    const { email, password } = this.state
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => this.props.navigation.navigate('Main'))
+      .catch(error => this.setState({ errorMessage: error.message }))
+  }
   render() {
     return (
       <ImageBackground
@@ -19,14 +32,26 @@ class Login extends React.Component {
             <Text style={styles.mainText}>Login</Text>
             <Item style={{ marginBottom: 10 }}>
               <Icon style={{ color: '#777777' }} active name="mail" />
-              <Input placeholder="Email" />
+              <Input
+                placeholder="Email"
+                onChangeText={email => this.setState({ email })}
+                value={this.state.email}
+              />
             </Item>
             <Item>
               <Icon style={{ color: '#777777' }} active name="lock" />
-              <Input secureTextEntry={true} placeholder="Password" />
+              <Input
+                secureTextEntry={true}
+                placeholder="Password"
+                onChangeText={password => this.setState({ password })}
+                value={this.state.password}
+              />
             </Item>
+            <Text style={{ color: 'red', textAlign: 'center', marginTop: 15 }}>
+              {this.state.errorMessage}
+            </Text>
             <Button
-              onPress={() => this.props.navigation.navigate('Details')}
+              onPress={this.handleLogin}
               block
               small
               danger

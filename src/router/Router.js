@@ -8,8 +8,10 @@ import Login from '../views/Login'
 import Register from '../views/Register'
 import { Icon } from 'native-base'
 import Home from '../views/Home'
-import Test from '../views/Test'
+import Loading from '../views/Loading'
+import Profile from '../views/Profile'
 
+// DEVELOPMENT DUMMY SCREEN
 class DetailsScreen extends React.Component {
   render() {
     return (
@@ -25,11 +27,12 @@ const MainTabNavigator = createBottomTabNavigator(
   {
     Map: Home,
     Aug: { screen: DetailsScreen, tabBarLabel: '360' },
-    Profile: DetailsScreen,
-    Events: Test,
+    Profile: Profile,
+    Events: Loading,
     Groups: DetailsScreen
   },
   {
+    // THIS IS CREATING THE ICONS FOR THE MAIN TABS
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: () => {
         const { routeName } = navigation.state
@@ -45,9 +48,6 @@ const MainTabNavigator = createBottomTabNavigator(
         } else if (routeName === 'Groups') {
           iconName = 'people'
         }
-
-        // You can return any component that you like here! We usually use an
-        // icon component from react-native-vector-icons
         return (
           <Icon
             style={{ color: '#444444', fontSize: 30 }}
@@ -60,17 +60,17 @@ const MainTabNavigator = createBottomTabNavigator(
   }
 )
 
-// REGISTER SCREEN
-const RegisterScreen = createSwitchNavigator({
-  Register: Register,
-  Details: Login
+// AUTH SWITCH NAVIGATOR
+const AuthStack = createSwitchNavigator({
+  Login,
+  Register
 })
 
 // MAIN SWITCH NAVIGATOR
 export default createSwitchNavigator({
-  Login: Login,
-  Register: RegisterScreen,
-  Details: MainTabNavigator
+  AuthLoading: Loading,
+  AuthStack,
+  Main: MainTabNavigator
 })
 
 // ROUTE CONFIG NEEDS TO OUTPUT A FUNCTION DON'T FORGET!

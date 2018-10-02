@@ -1,9 +1,20 @@
 import React from 'react'
 import { View, Image, StyleSheet, ImageBackground } from 'react-native'
-import Hr from 'react-native-hr-component'
 import { Item, Input, Icon, Button, Text } from 'native-base'
+import firebase from 'firebase'
 
 class Register extends React.Component {
+  constructor() {
+    super()
+    this.state = { email: '', password: '', errorMessage: '' }
+  }
+  handleSignUp = () => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .then(() => this.props.navigation.navigate('Main'))
+      .catch(error => this.setState({ errorMessage: error.message }))
+  }
   render() {
     return (
       <ImageBackground
@@ -19,18 +30,31 @@ class Register extends React.Component {
             <Text style={styles.mainText}>Register</Text>
             <Item style={{ marginBottom: 10 }}>
               <Icon style={{ color: '#777777' }} active name="mail" />
-              <Input placeholder="Email" />
+              <Input
+                placeholder="Email"
+                onChangeText={email => this.setState({ email })}
+                value={this.state.email}
+              />
             </Item>
             <Item>
               <Icon style={{ color: '#777777' }} active name="lock" />
-              <Input secureTextEntry={true} placeholder="Password" />
+              <Input
+                secureTextEntry={true}
+                placeholder="Password"
+                autoCapitalize="none"
+                onChangeText={password => this.setState({ password })}
+                value={this.state.password}
+              />
             </Item>
             <Item>
               <Icon style={{ color: '#777777' }} active name="lock" />
               <Input secureTextEntry={true} placeholder="Confirm Password" />
             </Item>
+            <Text style={{ color: 'red', textAlign: 'center', marginTop: 15 }}>
+              {this.state.errorMessage}
+            </Text>
             <Button
-              onPress={() => this.props.navigation.navigate('Details')}
+              onPress={this.handleSignUp}
               block
               small
               danger
