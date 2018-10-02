@@ -23,11 +23,11 @@ class Register extends React.Component {
             </Item>
             <Item>
               <Icon style={{ color: '#777777' }} active name="lock" />
-              <Input placeholder="Password" />
+              <Input secureTextEntry={true} placeholder="Password" />
             </Item>
             <Item>
               <Icon style={{ color: '#777777' }} active name="lock" />
-              <Input placeholder="Confirm Password" />
+              <Input secureTextEntry={true} placeholder="Confirm Password" />
             </Item>
             <Button
               onPress={() => this.props.navigation.navigate('Details')}
@@ -36,7 +36,7 @@ class Register extends React.Component {
               danger
               style={{ marginTop: 30 }}
             >
-              <Text>Sign In</Text>
+              <Text>Sign Up</Text>
             </Button>
           </View>
           <Text style={styles.smallText}>

@@ -23,7 +23,7 @@ class Login extends React.Component {
             </Item>
             <Item>
               <Icon style={{ color: '#777777' }} active name="lock" />
-              <Input placeholder="Password" />
+              <Input secureTextEntry={true} placeholder="Password" />
             </Item>
             <Button
               onPress={() => this.props.navigation.navigate('Details')}

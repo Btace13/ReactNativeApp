@@ -1,20 +1,31 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import { Header, Item, Input, Icon, Button } from 'native-base'
 
 export default class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Header searchBar rounded>
+          <Item>
+            <Icon name="ios-search" />
+            <Input placeholder="Search" />
+          </Item>
+          <Button transparent>
+            <Text>Search</Text>
+          </Button>
+        </Header>
         <MapView
           provider={PROVIDER_GOOGLE}
-          style={styles.map}
+          style={styles.container}
           region={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121
+            latitude: 29.420694,
+            longitude: -98.483756,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.0021
           }}
+          mapType={'standard'}
         />
       </View>
     )
@@ -23,13 +34,7 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
     height: '100%',
-    width: '100%',
-    justifyContent: 'flex-end',
-    alignItems: 'center'
-  },
-  map: {
-    ...StyleSheet.absoluteFillObject
+    width: '100%'
   }
 })

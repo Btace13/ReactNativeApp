@@ -8,6 +8,8 @@ import Login from '../views/Login'
 import Register from '../views/Register'
 import { Icon } from 'native-base'
 import Home from '../views/Home'
+import Test from '../views/Test'
+
 class DetailsScreen extends React.Component {
   render() {
     return (
@@ -24,12 +26,12 @@ const MainTabNavigator = createBottomTabNavigator(
     Map: Home,
     Aug: { screen: DetailsScreen, tabBarLabel: '360' },
     Profile: DetailsScreen,
-    Events: DetailsScreen,
+    Events: Test,
     Groups: DetailsScreen
   },
   {
     navigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, tintColor }) => {
+      tabBarIcon: () => {
         const { routeName } = navigation.state
         let iconName
         if (routeName === 'Map') {
@@ -48,7 +50,7 @@ const MainTabNavigator = createBottomTabNavigator(
         // icon component from react-native-vector-icons
         return (
           <Icon
-            style={{ color: '#444444', fontSize: 35 }}
+            style={{ color: '#444444', fontSize: 30 }}
             active
             name={iconName}
           />
@@ -61,9 +63,7 @@ const MainTabNavigator = createBottomTabNavigator(
 // REGISTER SCREEN
 const RegisterScreen = createSwitchNavigator({
   Register: Register,
-  Details: {
-    screen: Login
-  }
+  Details: Login
 })
 
 // MAIN SWITCH NAVIGATOR
