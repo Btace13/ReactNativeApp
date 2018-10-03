@@ -5,7 +5,6 @@ import {
   createBottomTabNavigator
 } from 'react-navigation'
 import Login from '../views/Login'
-import Register from '../views/Register'
 import { Icon } from 'native-base'
 import Home from '../views/Home'
 import Loading from '../views/Loading'
@@ -64,8 +63,7 @@ const MainTabNavigator = createBottomTabNavigator(
 
 // AUTH SWITCH NAVIGATOR
 const AuthStack = createSwitchNavigator({
-  Login,
-  Register
+  Login
 })
 
 // MAIN SWITCH NAVIGATOR
