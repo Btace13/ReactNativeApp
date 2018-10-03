@@ -10,6 +10,8 @@ import { Icon } from 'native-base'
 import Home from '../views/Home'
 import Loading from '../views/Loading'
 import Profile from '../views/Profile'
+import Events from '../views/Events'
+import Groups from '../views/Groups'
 
 // DEVELOPMENT DUMMY SCREEN
 class DetailsScreen extends React.Component {
@@ -27,9 +29,9 @@ const MainTabNavigator = createBottomTabNavigator(
   {
     Map: Home,
     Aug: { screen: DetailsScreen, tabBarLabel: '360' },
-    Profile: Profile,
-    Events: Loading,
-    Groups: DetailsScreen
+    Profile,
+    Events,
+    Groups
   },
   {
     // THIS IS CREATING THE ICONS FOR THE MAIN TABS
