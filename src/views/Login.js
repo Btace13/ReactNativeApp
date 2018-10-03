@@ -1,5 +1,11 @@
 import React from 'react'
-import { View, Image, StyleSheet, ImageBackground, Dimensions } from 'react-native'
+import {
+  View,
+  Image,
+  StyleSheet,
+  ImageBackground,
+  Dimensions
+} from 'react-native'
 import Hr from 'react-native-hr-component'
 import { Item, Input, Icon, Button, Text } from 'native-base'
 import firebase from 'firebase'
@@ -8,85 +14,86 @@ import validate from '../utils/validate'
 class Login extends React.Component {
   constructor() {
     super()
-    this.state = { errorMessage: '', 
-    viewMode: Dimensions.get("window").height > 500 ? "portrait" : "landscape",
-    authMode: "login",
-    controls: {
+    this.state = {
+      errorMessage: '',
+      viewMode:
+        Dimensions.get('window').height > 500 ? 'portrait' : 'landscape',
+      authMode: 'login',
+      controls: {
         email: {
-            value: "",
-            valid: false,
-            validationRules: {
-                isEmail: true
-            },
-            touched: false   
+          value: '',
+          valid: false,
+          validationRules: {
+            isEmail: true
+          },
+          touched: false
         },
         password: {
-            value: "",
-            valid: false,
-            validationRules: {
-                minLength: 6
-            },
-            touched: false    
+          value: '',
+          valid: false,
+          validationRules: {
+            minLength: 6
+          },
+          touched: false
         },
         confirmPassword: {
-            value: "",
-            valid: false,
-            validationRules: {
-                equalTo: 'password'
-            },
-            touched: false    
-           }
+          value: '',
+          valid: false,
+          validationRules: {
+            equalTo: 'password'
+          },
+          touched: false
+        }
+      }
     }
+    // LISTENING TO A CHANGE IN DIMENSTIONS OF THE SCREEN
+    Dimensions.addEventListener('change', this.updateStyles)
   }
-     
-    Dimensions.addEventListener("change", this.updateStyles);
-        
-  }
-
+  // REMOVING STYLE CHANGE TRIGGER WHEN APP STARTS UP
   componentWillUnmount() {
-
-      Dimensions.removeEventListener("change", this.updateStyles);
+    Dimensions.removeEventListener('change', this.updateStyles)
   }
-
-  updateStyles = (dims) => {
+  // UPDATE STYLES FUNCTION
+  updateStyles = dims => {
     this.setState({
-        viewMode: dims.window.height > 500 ? "portrait" : "landscape"
-
-    });
-
-}
-
-switchAuthModeHandler = () => {
+      viewMode: dims.window.height > 500 ? 'portrait' : 'landscape'
+    })
+  }
+  // ADDS LOGIC TO SWITCHING BETWEEN AUTH MODES
+  switchAuthModeHandler = () => {
     this.setState(prevState => {
-        return {
-            authMode: prevState.authMode === "login" ? "signup" : "login"
-        };
-    });
-};
-
+      return {
+        authMode: prevState.authMode === 'login' ? 'signup' : 'login'
+      }
+    })
+  }
+  // LOGIN HANDALER FOR EMAIL AND PASSWORD
   handleLogin = () => {
     firebase
       .auth()
-      .signInWithEmailAndPassword(this.state.controls.email.value, this.state.controls.password.value)
+      .signInWithEmailAndPassword(
+        this.state.controls.email.value,
+        this.state.controls.password.value
+      )
       .then(() => this.props.navigation.navigate('Main'))
       .catch(error => this.setState({ errorMessage: error.message }))
   }
-
+  // UPDATING THE STATE WITH USER IMPUT LOGIC
   updateInputState = (key, value) => {
-    let connectedValue = {};
+    let connectedValue = {}
     if (this.state.controls[key].validationRules.equalTo) {
-      const equalControl = this.state.controls[key].validationRules.equalTo;
-      const equalValue = this.state.controls[equalControl].value;
+      const equalControl = this.state.controls[key].validationRules.equalTo
+      const equalValue = this.state.controls[equalControl].value
       connectedValue = {
         ...connectedValue,
         equalTo: equalValue
-      };
+      }
     }
-    if (key === "password") {
+    if (key === 'password') {
       connectedValue = {
         ...connectedValue,
         equalTo: value
-      };
+      }
     }
     this.setState(prevState => {
       return {
@@ -95,7 +102,7 @@ switchAuthModeHandler = () => {
           confirmPassword: {
             ...prevState.controls.confirmPassword,
             valid:
-              key === "password"
+              key === 'password'
                 ? validate(
                     prevState.controls.confirmPassword.value,
                     prevState.controls.confirmPassword.validationRules,
@@ -113,9 +120,9 @@ switchAuthModeHandler = () => {
             )
           }
         }
-      };
-    });
-  };
+      }
+    })
+  }
 
   render() {
     return (
@@ -134,11 +141,11 @@ switchAuthModeHandler = () => {
               <Icon style={{ color: '#777777' }} active name="mail" />
               <Input
                 placeholder="Email"
-                valid = {this.state.controls.email.valid}
-                touched = {this.state.controls.email.touched}
-                autoCorrect = {false}
-                keyboardType = {'email-address'}
-                onChangeText={val => this.updateInputState("email", val)}
+                valid={this.state.controls.email.valid}
+                touched={this.state.controls.email.touched}
+                autoCorrect={false}
+                keyboardType={'email-address'}
+                onChangeText={val => this.updateInputState('email', val)}
                 value={this.state.controls.email.value}
               />
             </Item>
@@ -147,10 +154,10 @@ switchAuthModeHandler = () => {
               <Input
                 secureTextEntry={true}
                 placeholder="Password"
-                onChangeText={val => this.updateInputState("password", val)}
+                onChangeText={val => this.updateInputState('password', val)}
                 value={this.state.controls.password.value}
-                valid = {this.state.controls.password.valid}
-                touched = {this.state.controls.password.touched}
+                valid={this.state.controls.password.valid}
+                touched={this.state.controls.password.touched}
               />
             </Item>
             <Text style={{ color: 'red', textAlign: 'center', marginTop: 15 }}>
@@ -161,7 +168,10 @@ switchAuthModeHandler = () => {
               block
               small
               danger
-              disabled = {!this.state.controls.email.valid || !this.state.controls.password.valid}
+              disabled={
+                !this.state.controls.email.valid ||
+                !this.state.controls.password.valid
+              }
               style={{ marginTop: 30 }}
             >
               <Text>Sign In</Text>
