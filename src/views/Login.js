@@ -1,122 +1,22 @@
 import React from 'react'
-import { View, Image, StyleSheet, ImageBackground, Dimensions } from 'react-native'
+import { View, Image, StyleSheet, ImageBackground } from 'react-native'
 import Hr from 'react-native-hr-component'
 import { Item, Input, Icon, Button, Text } from 'native-base'
 import firebase from 'firebase'
-import validate from '../utils/validate'
 
 class Login extends React.Component {
   constructor() {
     super()
-    this.state = { errorMessage: '', 
-    viewMode: Dimensions.get("window").height > 500 ? "portrait" : "landscape",
-    authMode: "login",
-    controls: {
-        email: {
-            value: "",
-            valid: false,
-            validationRules: {
-                isEmail: true
-            },
-            touched: false   
-        },
-        password: {
-            value: "",
-            valid: false,
-            validationRules: {
-                minLength: 6
-            },
-            touched: false    
-        },
-        confirmPassword: {
-            value: "",
-            valid: false,
-            validationRules: {
-                equalTo: 'password'
-            },
-            touched: false    
-           }
-    }
+    this.state = { email: '', password: '', errorMessage: '' }
   }
-     
-    Dimensions.addEventListener("change", this.updateStyles);
-        
-  }
-
-  componentWillUnmount() {
-
-      Dimensions.removeEventListener("change", this.updateStyles);
-  }
-
-  updateStyles = (dims) => {
-    this.setState({
-        viewMode: dims.window.height > 500 ? "portrait" : "landscape"
-
-    });
-
-}
-
-switchAuthModeHandler = () => {
-    this.setState(prevState => {
-        return {
-            authMode: prevState.authMode === "login" ? "signup" : "login"
-        };
-    });
-};
-
   handleLogin = () => {
+    const { email, password } = this.state
     firebase
       .auth()
-      .signInWithEmailAndPassword(this.state.controls.email.value, this.state.controls.password.value)
+      .signInWithEmailAndPassword(email, password)
       .then(() => this.props.navigation.navigate('Main'))
       .catch(error => this.setState({ errorMessage: error.message }))
   }
-
-  updateInputState = (key, value) => {
-    let connectedValue = {};
-    if (this.state.controls[key].validationRules.equalTo) {
-      const equalControl = this.state.controls[key].validationRules.equalTo;
-      const equalValue = this.state.controls[equalControl].value;
-      connectedValue = {
-        ...connectedValue,
-        equalTo: equalValue
-      };
-    }
-    if (key === "password") {
-      connectedValue = {
-        ...connectedValue,
-        equalTo: value
-      };
-    }
-    this.setState(prevState => {
-      return {
-        controls: {
-          ...prevState.controls,
-          confirmPassword: {
-            ...prevState.controls.confirmPassword,
-            valid:
-              key === "password"
-                ? validate(
-                    prevState.controls.confirmPassword.value,
-                    prevState.controls.confirmPassword.validationRules,
-                    connectedValue
-                  )
-                : prevState.controls.confirmPassword.valid
-          },
-          [key]: {
-            ...prevState.controls[key],
-            value: value,
-            valid: validate(
-              value,
-              prevState.controls[key].validationRules,
-              connectedValue
-            )
-          }
-        }
-      };
-    });
-  };
-
   render() {
     return (
       <ImageBackground
@@ -134,12 +34,8 @@ switchAuthModeHandler = () => {
               <Icon style={{ color: '#777777' }} active name="mail" />
               <Input
                 placeholder="Email"
-                valid = {this.state.controls.email.valid}
-                touched = {this.state.controls.email.touched}
-                autoCorrect = {false}
-                keyboardType = {'email-address'}
-                onChangeText={val => this.updateInputState("email", val)}
-                value={this.state.controls.email.value}
+                onChangeText={email => this.setState({ email })}
+                value={this.state.email}
               />
             </Item>
             <Item>
@@ -147,10 +43,8 @@ switchAuthModeHandler = () => {
               <Input
                 secureTextEntry={true}
                 placeholder="Password"
-                onChangeText={val => this.updateInputState("password", val)}
-                value={this.state.controls.password.value}
-                valid = {this.state.controls.password.valid}
-                touched = {this.state.controls.password.touched}
+                onChangeText={password => this.setState({ password })}
+                value={this.state.password}
               />
             </Item>
             <Text style={{ color: 'red', textAlign: 'center', marginTop: 15 }}>
@@ -161,7 +55,6 @@ switchAuthModeHandler = () => {
               block
               small
               danger
-              disabled = {!this.state.controls.email.valid || !this.state.controls.password.valid}
               style={{ marginTop: 30 }}
             >
               <Text>Sign In</Text>
