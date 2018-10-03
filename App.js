@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Router from './src/router/Router'
 import firebase from 'firebase'
+import { Root } from 'native-base'
 
 // Initialize Firebase
 var config = {
@@ -16,6 +17,10 @@ firebase.initializeApp(config)
 type Props = {}
 export default class App extends Component<Props> {
   render() {
-    return <Router />
+    return (
+      <Root>
+        <Router />
+      </Root>
+    )
   }
 }
