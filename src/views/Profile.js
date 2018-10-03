@@ -1,6 +1,7 @@
 import React from 'react'
 import firebase from 'firebase'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
+import { Button, Text } from 'native-base'
 export default class DetailsScreen extends React.Component {
   constructor() {
     super()
@@ -8,11 +9,34 @@ export default class DetailsScreen extends React.Component {
       user: firebase.auth().currentUser
     }
   }
+  handleSignOut = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(
+        function() {
+          // Sign-out successful.
+          console.log('signed out')
+        },
+        function(error) {
+          // An error happened.
+          alert(error)
+        }
+      )
+  }
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>{this.state.user.email}</Text>
-        <Text>{this.state.user.uid}</Text>
+        <Text>User Email: {this.state.user.email}</Text>
+        <Text>Unique ID: {this.state.user.uid}</Text>
+        <Button
+          full
+          danger
+          style={{ marginTop: 40 }}
+          onPress={this.handleSignOut}
+        >
+          <Text>Sign Out</Text>
+        </Button>
       </View>
     )
   }
