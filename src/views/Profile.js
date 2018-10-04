@@ -1,6 +1,6 @@
 import React from 'react'
 import firebase from 'firebase'
-import { View } from 'react-native'
+import { View, Image } from 'react-native'
 import { Button, Text } from 'native-base'
 import { LoginManager } from 'react-native-fbsdk'
 
@@ -27,10 +27,32 @@ export default class DetailsScreen extends React.Component {
       )
     LoginManager.logOut()
   }
+  componentDidMount() {
+    console.log(this.state.user)
+  }
   render() {
-    return (
+    https: return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>User Email: {this.state.user.email}</Text>
+        {this.state.user.photoURL ? (
+          <Image
+            style={{ width: 40, height: 40 }}
+            source={{ uri: this.state.user.photoURL }}
+          />
+        ) : (
+          <Image
+            style={{ width: 40, height: 40 }}
+            source={{
+              uri: 'http://simpleicon.com/wp-content/uploads/user1.png'
+            }}
+          />
+        )}
+        <Text>
+          Name:{' '}
+          {this.state.user.displayName
+            ? this.state.user.displayName
+            : 'Not set'}
+        </Text>
+        <Text>Email: {this.state.user.email}</Text>
         <Text>Unique ID: {this.state.user.uid}</Text>
         <Button
           full

@@ -15,15 +15,6 @@ export default class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header searchBar rounded>
-          <Item>
-            <Icon name="ios-search" />
-            <Input placeholder="Search" />
-          </Item>
-          <Button transparent>
-            <Text>Search</Text>
-          </Button>
-        </Header>
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.container}
