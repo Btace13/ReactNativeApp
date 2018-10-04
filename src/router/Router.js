@@ -12,22 +12,13 @@ import Profile from '../views/Profile'
 import Events from '../views/Events'
 import Groups from '../views/Groups'
 
-// DEVELOPMENT DUMMY SCREEN
-class DetailsScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Details Screen</Text>
-      </View>
-    )
-  }
-}
+import ARScreen from '../views/AR'
 
 // MAIN TAB NAVIGATOR
 const MainTabNavigator = createBottomTabNavigator(
   {
     Map: Home,
-    Aug: { screen: DetailsScreen, tabBarLabel: '360' },
+    Aug: { screen: ARScreen, tabBarLabel: '360' },
     Profile,
     Events,
     Groups

@@ -436,6 +436,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
+## ViroKit_static_lib
+
+Copyright 2018 ViroMedia, Inc
+
+## ViroReact
+
+Copyright 2018 ViroMedia, Inc
+
 ## boost-for-react-native
 
 Boost Software License - Version 1.0 - August 17th, 2003
