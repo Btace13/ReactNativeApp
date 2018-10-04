@@ -2,6 +2,8 @@ import React from 'react'
 import firebase from 'firebase'
 import { View } from 'react-native'
 import { Button, Text } from 'native-base'
+import { LoginManager } from 'react-native-fbsdk'
+
 export default class DetailsScreen extends React.Component {
   constructor() {
     super()
@@ -23,6 +25,7 @@ export default class DetailsScreen extends React.Component {
           alert(error)
         }
       )
+    LoginManager.logOut()
   }
   render() {
     return (
