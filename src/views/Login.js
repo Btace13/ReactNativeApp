@@ -10,6 +10,7 @@ import Hr from 'react-native-hr-component'
 import { Item, Input, Icon, Button, Text } from 'native-base'
 import firebase from 'firebase'
 import validate from '../utils/validate'
+import { LoginButton, LoginManager, AccessToken } from 'react-native-fbsdk'
 
 class Login extends React.Component {
   constructor() {
@@ -135,6 +136,34 @@ class Login extends React.Component {
       }
     })
   }
+  // CREATES A USER USING THE FACEBOOK SDK AND CHANGES THE AUTH STATE OF FIREBASE
+  onLoginFacebook = () => {
+    LoginManager.logInWithReadPermissions(['public_profile', 'email'])
+      .then(result => {
+        if (result.isCancelled) {
+          return Promise.reject(new Error('The user cancelled the request'))
+        }
+        console.log(
+          `Login success with permissions: ${result.grantedPermissions.toString()}`
+        )
+        // get the access token
+        return AccessToken.getCurrentAccessToken()
+      })
+      .then(data => {
+        const credential = firebase.auth.FacebookAuthProvider.credential(
+          data.accessToken
+        )
+        return firebase.auth().signInWithCredential(credential)
+      })
+      .then(currentUser => {
+        console.log(
+          `Facebook Login with user : ${JSON.stringify(currentUser.toJSON())}`
+        )
+      })
+      .catch(error => {
+        console.log(`Facebook login fail with error: ${error}`)
+      })
+  }
   render() {
     return (
       <ImageBackground
@@ -242,7 +271,7 @@ class Login extends React.Component {
             hrStyles={{ marginTop: 20 }}
           />
           <View style={styles.socialButtons}>
-            <Button iconLeft block>
+            <Button iconLeft block onPress={this.onLoginFacebook}>
               <Icon name="logo-facebook" />
               <Text>Login with Facebook</Text>
             </Button>
