@@ -8,7 +8,8 @@ export default class Home extends Component {
     Toast.show({
       text: 'Welcome!',
       type: 'success',
-      position: 'top'
+      position: 'bottom',
+      duration: 2500
     })
   }
   render() {

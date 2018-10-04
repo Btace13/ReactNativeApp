@@ -10,6 +10,7 @@ import Hr from 'react-native-hr-component'
 import { Item, Input, Icon, Button, Text } from 'native-base'
 import firebase from 'firebase'
 import validate from '../utils/validate'
+import { LoginButton, AccessToken } from 'react-native-fbsdk'
 
 class Login extends React.Component {
   constructor() {
@@ -242,10 +243,21 @@ class Login extends React.Component {
             hrStyles={{ marginTop: 20 }}
           />
           <View style={styles.socialButtons}>
-            <Button iconLeft block>
-              <Icon name="logo-facebook" />
-              <Text>Login with Facebook</Text>
-            </Button>
+            <LoginButton
+              publishPermissions={['publish_actions']}
+              onLoginFinished={(error, result) => {
+                if (error) {
+                  alert('login has error: ' + result.error)
+                } else if (result.isCancelled) {
+                  alert('login is cancelled.')
+                } else {
+                  AccessToken.getCurrentAccessToken().then(data => {
+                    alert(data.accessToken.toString())
+                  })
+                }
+              }}
+              onLogoutFinished={() => alert('logout.')}
+            />
             <Button iconLeft style={{ marginTop: 10 }} block danger>
               <Icon name="logo-google" />
               <Text>Sign in with Google+</Text>
@@ -288,8 +300,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   socialButtons: {
+    display: 'flex',
     width: '70%',
-    marginTop: 20
+    marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 
