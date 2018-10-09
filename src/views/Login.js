@@ -10,7 +10,7 @@ import Hr from 'react-native-hr-component'
 import { Item, Input, Icon, Button, Text } from 'native-base'
 import firebase from 'firebase'
 import validate from '../utils/validate'
-import { LoginButton, LoginManager, AccessToken } from 'react-native-fbsdk'
+import { LoginManager, AccessToken } from 'react-native-fbsdk'
 
 class Login extends React.Component {
   constructor() {
@@ -68,7 +68,9 @@ class Login extends React.Component {
         this.state.controls.email.value,
         this.state.controls.password.value
       )
-      .then(() => this.props.navigation.navigate('Main'))
+      .then(() => {
+        this.props.navigation.navigate('Main')
+      })
       .catch(error => this.setState({ errorMessage: error.message }))
   }
   // LOGIN HANDALER FOR EMAIL AND PASSWORD
@@ -79,7 +81,9 @@ class Login extends React.Component {
         this.state.controls.email.value,
         this.state.controls.password.value
       )
-      .then(() => this.props.navigation.navigate('Main'))
+      .then(() => {
+        this.props.navigation.navigate('Main')
+      })
       .catch(error => this.setState({ errorMessage: error.message }))
   }
   // UPDATING THE STATE WITH USER IMPUT LOGIC

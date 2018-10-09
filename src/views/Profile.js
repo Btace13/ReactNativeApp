@@ -31,7 +31,8 @@ export default class DetailsScreen extends React.Component {
     console.log(this.state.user)
   }
   render() {
-    https: return (
+    // this.props.navigation.openDrawer()
+    return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         {this.state.user.photoURL ? (
           <Image

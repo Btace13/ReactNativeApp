@@ -2,7 +2,8 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import {
   createSwitchNavigator,
-  createBottomTabNavigator
+  createBottomTabNavigator,
+  createDrawerNavigator
 } from 'react-navigation'
 import Login from '../views/Login'
 import { Icon } from 'native-base'
@@ -23,12 +24,19 @@ class DetailsScreen extends React.Component {
   }
 }
 
+// PROFILE DRAWER NAVIGATOR
+const ProfileScreen = createDrawerNavigator({
+  Home: {
+    screen: Profile
+  }
+})
+
 // MAIN TAB NAVIGATOR
 const MainTabNavigator = createBottomTabNavigator(
   {
     Map: Home,
     Aug: { screen: DetailsScreen, tabBarLabel: '360' },
-    Profile,
+    Profile: ProfileScreen,
     Events,
     Groups
   },
