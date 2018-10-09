@@ -479,6 +479,26 @@ SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Copyright 2018 ViroMedia, Inc</string>
+			<key>License</key>
+			<string>Copyright</string>
+			<key>Title</key>
+			<string>ViroKit_static_lib</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
+			<string>Copyright 2018 ViroMedia, Inc</string>
+			<key>License</key>
+			<string>Copyright</string>
+			<key>Title</key>
+			<string>ViroReact</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>Boost Software License - Version 1.0 - August 17th, 2003
 
 Permission is hereby granted, free of charge, to any person or organization

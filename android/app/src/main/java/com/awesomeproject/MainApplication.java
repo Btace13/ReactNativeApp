@@ -10,6 +10,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.airbnb.android.react.maps.MapsPackage;
+import com.viromedia.bridge.ReactViroPackage;
 
 import com.facebook.FacebookSdk;
 import com.facebook.CallbackManager;
@@ -39,7 +40,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new MapsPackage(),
           //new VectorIconsPackage(),
-          new FBSDKPackage(mCallbackManager)
+          new FBSDKPackage(mCallbackManager),
+          new ReactViroPackage(ReactViroPackage.ViroPlatform.GVR)
       );
     }
 

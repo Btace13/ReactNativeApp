@@ -20,8 +20,9 @@
     "react-native-maps": "^0.21.0",
     "react-navigation": "^2.17.0",
     "react-redux": "^5.0.7",
-    "redux": "^4.0.0",
-    "xcode": "^1.0.0"
+    "xcode": "^1.0.0",
+    "react-viro": "2.11.0",
+    "redux": "^4.0.0"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",
