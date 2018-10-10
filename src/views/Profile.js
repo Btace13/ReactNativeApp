@@ -28,7 +28,8 @@ export default class DetailsScreen extends React.Component {
     LoginManager.logOut()
   }
   componentDidMount() {
-    console.log(this.state.user)
+    const test = firebase.firestore().collection('users')
+    console.log(test)
   }
   render() {
     // this.props.navigation.openDrawer()

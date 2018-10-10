@@ -11,6 +11,7 @@ import { Item, Input, Icon, Button, Text } from 'native-base'
 import firebase from 'firebase'
 import validate from '../utils/validate'
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
+import { connect } from 'react-redux'
 
 class Login extends React.Component {
   constructor() {
@@ -50,6 +51,7 @@ class Login extends React.Component {
     // LISTENING TO A CHANGE IN DIMENSTIONS OF THE SCREEN
     Dimensions.addEventListener('change', this.updateStyles)
   }
+
   // REMOVING STYLE CHANGE TRIGGER WHEN APP STARTS UP
   componentWillUnmount() {
     Dimensions.removeEventListener('change', this.updateStyles)
@@ -68,7 +70,21 @@ class Login extends React.Component {
         this.state.controls.email.value,
         this.state.controls.password.value
       )
-      .then(() => {
+      .then(data => {
+        firebase
+          .firestore()
+          .collection('users')
+          .doc(data.user.uid)
+          .set({
+            id: data.user.uid,
+            email: data.user.email,
+            photoUrl: data.user.photoURL
+          })
+        this.props.setUser({
+          id: data.user.uid,
+          email: data.user.email,
+          photoURL: data.user.photoURL
+        })
         this.props.navigation.navigate('Main')
       })
       .catch(error => this.setState({ errorMessage: error.message }))
@@ -326,4 +342,20 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Login
+// CONNECTING REDUX PROPS
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: payload => dispatch(setUser(payload))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login)
