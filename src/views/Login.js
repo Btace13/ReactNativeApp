@@ -12,6 +12,7 @@ import firebase from 'firebase'
 import validate from '../utils/validate'
 import { LoginManager, AccessToken } from 'react-native-fbsdk'
 import { connect } from 'react-redux'
+import { setUser } from '../store/actions/index'
 
 class Login extends React.Component {
   constructor() {
@@ -62,6 +63,18 @@ class Login extends React.Component {
       viewMode: dims.window.height > 500 ? 'portrait' : 'landscape'
     })
   }
+
+  testRedux = () => {
+    firebase
+      .firestore()
+      .collection('users')
+      .doc('BPcQelTEFPVTVbIamdkJB4nsR0q2')
+      .get()
+      .then(doc => {
+        console.log(doc.data())
+      })
+  }
+
   // SIGN UP HANDALER FOR EMAIL AND PASSWORD
   handleSignUp = () => {
     firebase
@@ -71,20 +84,19 @@ class Login extends React.Component {
         this.state.controls.password.value
       )
       .then(data => {
+        const newUser = {
+          id: data.user.uid,
+          name: null,
+          email: data.user.email,
+          photoUrl: data.user.photoURL,
+          events: []
+        }
         firebase
           .firestore()
           .collection('users')
           .doc(data.user.uid)
-          .set({
-            id: data.user.uid,
-            email: data.user.email,
-            photoUrl: data.user.photoURL
-          })
-        this.props.setUser({
-          id: data.user.uid,
-          email: data.user.email,
-          photoURL: data.user.photoURL
-        })
+          .set(newUser)
+        this.props.setUser(newUser)
         this.props.navigation.navigate('Main')
       })
       .catch(error => this.setState({ errorMessage: error.message }))
@@ -97,7 +109,15 @@ class Login extends React.Component {
         this.state.controls.email.value,
         this.state.controls.password.value
       )
-      .then(() => {
+      .then(data => {
+        firebase
+          .firestore()
+          .collection('users')
+          .doc(data.user.uid)
+          .get()
+          .then(doc => {
+            this.props.setUser(doc.data())
+          })
         this.props.navigation.navigate('Main')
       })
       .catch(error => this.setState({ errorMessage: error.message }))
@@ -295,7 +315,13 @@ class Login extends React.Component {
               <Icon name="logo-facebook" />
               <Text>Login with Facebook</Text>
             </Button>
-            <Button iconLeft style={{ marginTop: 10 }} block danger>
+            <Button
+              onPress={this.testRedux}
+              iconLeft
+              style={{ marginTop: 10 }}
+              block
+              danger
+            >
               <Icon name="logo-google" />
               <Text>Sign in with Google+</Text>
             </Button>

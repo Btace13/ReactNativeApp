@@ -1,9 +1,9 @@
 import { createStore, combineReducers, compose } from 'redux'
 
-import reducer from './reducers/user'
+import user from './reducers/user'
 
 const rootReducer = combineReducers({
-  user: reducer
+  user: user
 })
 
 let composeEnhancers = compose

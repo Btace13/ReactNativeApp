@@ -3,8 +3,10 @@ import firebase from 'firebase'
 import { View, Image } from 'react-native'
 import { Button, Text } from 'native-base'
 import { LoginManager } from 'react-native-fbsdk'
+import { connect } from 'react-redux'
+import { setUser } from '../store/actions/index'
 
-export default class DetailsScreen extends React.Component {
+class Profile extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -26,6 +28,7 @@ export default class DetailsScreen extends React.Component {
         }
       )
     LoginManager.logOut()
+    this.props.setUser({})
   }
   componentDidMount() {
     const test = firebase.firestore().collection('users')
@@ -68,3 +71,21 @@ export default class DetailsScreen extends React.Component {
     )
   }
 }
+
+// CONNECTING REDUX PROPS
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: payload => dispatch(setUser(payload))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Profile)

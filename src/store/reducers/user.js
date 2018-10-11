@@ -4,20 +4,16 @@ const initialState = {
   user: {}
 }
 
-const reducer = (state = initialState, action) => {
+const user = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER:
       return {
         ...state,
-        user: {
-          id: action.payload.id,
-          email: action.payload.email,
-          photoUrl: action.payload.photoUrl
-        }
+        user: action.userData
       }
     default:
       return state
   }
 }
 
-export default reducer
+export default user
