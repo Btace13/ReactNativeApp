@@ -2,7 +2,8 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import {
   createSwitchNavigator,
-  createBottomTabNavigator
+  createBottomTabNavigator,
+  createDrawerNavigator
 } from 'react-navigation'
 import Login from '../views/Login'
 import { Icon } from 'native-base'
@@ -13,6 +14,13 @@ import Events from '../views/Events'
 import Groups from '../views/Groups'
 
 import ARScreen from '../views/AR'
+
+// PROFILE DRAWER NAVIGATOR
+const ProfileScreen = createDrawerNavigator({
+  Home: {
+    screen: Profile
+  }
+})
 
 // MAIN TAB NAVIGATOR
 const MainTabNavigator = createBottomTabNavigator(

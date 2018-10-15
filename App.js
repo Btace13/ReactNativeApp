@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Router from './src/router/Router'
 import firebase from 'firebase'
+require('firebase/firestore')
 import { Root } from 'native-base'
 
 // Initialize Firebase
@@ -13,6 +14,10 @@ var config = {
   messagingSenderId: '551930559782'
 }
 firebase.initializeApp(config)
+
+const firestore = firebase.firestore()
+const settings = { /* your settings... */ timestampsInSnapshots: true }
+firestore.settings(settings)
 
 type Props = {}
 export default class App extends Component<Props> {
